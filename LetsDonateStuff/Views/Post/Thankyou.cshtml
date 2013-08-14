@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = ViewBag.Heading = "Thankyou";
+}
+
+<div class="row">
+    <div class="span12">
+        Your posted item has been added to moderation queue.
+        <br />
+        We have sent you a confirmation email.<br />
+        <br />
+        The email will contain a link that you can visit to have your offer removed from the site.<br />
+        <br />
+        <hr />
+        @Html.ActionLink("Back to Home", "Index", null, new { @class = "lds-button" })
+
+    </div>
+</div>

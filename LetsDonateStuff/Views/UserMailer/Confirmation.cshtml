@@ -1,0 +1,15 @@
+@model LetsDonateStuff.DAL.PostedItem
+@{
+    string siteUrl = @Url.SiteUrl();
+    bool donation = Model is LetsDonateStuff.DAL.Donation;
+}
+Dear @Model.Name<br />
+<br />
+You have @(donation?"offered":"requested") @Model.Title on <a href="@siteUrl">LetsDonateStuff.com</a><br /><br />
+
+The post is being reviewed by the moderators. It will be shown on the website when it is approved.<br />
+If you wish to <strong>remove</strong> your post at any time, please click on the following link.<br />
+@{
+    string deleteLink = siteUrl + Url.Action("Delete", "Post", new { id = Model.Id, code = Model.Code });
+}
+<a href="@deleteLink">@deleteLink</a>

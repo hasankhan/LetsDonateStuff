@@ -1,0 +1,103 @@
+﻿@model LetsDonateStuff.Models.PostCreateModel
+
+@{
+    ViewBag.Title = "Need";
+    ViewBag.Heading = "If you need something, you can post it here";
+}
+
+@section Head {
+    @ViewIncludes.AddAddressPicker(this)
+}
+
+<div class="row">
+    <div class="span6">
+        @using (Html.BeginForm("Need", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div>
+                @Html.ValidationSummary(true)
+                <fieldset>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Name)
+                    </div>
+                    <div class="editor-field">
+                        @if (String.IsNullOrEmpty(Model.Name))
+                        {
+                            @Html.EditorFor(model => model.Name);
+                        }
+                        else
+                        {
+                            @Html.DisplayTextFor(model => model.Name);
+                        }
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Email)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DisplayTextFor(model => model.Email)
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Title)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Title)
+                        @Html.ValidationMessageFor(model => model.Title)
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Description)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Description)
+                        @Html.ValidationMessageFor(model => model.Description)
+                    </div>
+
+                    @Html.HiddenFor(model => model.Latitude)
+                    @Html.HiddenFor(model => model.Longitude)
+                    @Html.HiddenFor(model => model.Locality)
+                    @Html.HiddenFor(model => model.Country)
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Address)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Address)
+                        @Html.ValidationMessageFor(model => model.Address)
+                    </div>
+
+                    <div class="editor-label">
+                        <label for="PublishOnOtherSites">Also publish on other sites (e.g. <a href="http://www.freecycle.org/" target="_blank">Freecycle</a>)</label>
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.PublishOnOtherSites)
+                        @Html.ValidationMessageFor(model => model.PublishOnOtherSites)
+                    </div>
+
+                    @*@Html.Partial("_Captcha")*@
+                    <br />
+                </fieldset>
+            </div>
+            <div class="display-field">
+                <input type="submit" value="Submit" class="btn btn-primary" data-dismiss="modal" />
+                @Html.ActionLink("Cancel", "Index", null, new { @class = "btn" })
+            </div>
+        }
+
+    </div>
+    <div class="span6">
+        @Html.Partial("_EditMap")
+        <hr>
+        <p>Please drag the marker and place it on the location on map where this item can be picked up.</p>
+        <p>You can also type the address first and then you can select the address from suggestion list that appears and map will automatically be updated.</p>
+        <div class="alert">
+            <strong>Note:</strong> Do not enter your complete home address. Just type it to street level so people in same location can know that item is requested near by.
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $.validator.addMethod('accept', function () { return true; });
+    });
+</script>
+

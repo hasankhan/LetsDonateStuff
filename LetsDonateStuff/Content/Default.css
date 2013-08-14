@@ -1,0 +1,75 @@
+﻿/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error {
+    color: #ff0000;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors {
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+/* Styles for editor and display helpers
+----------------------------------------------------------*/
+.display-label, 
+.editor-label 
+{
+    color:#606060;
+    font-weight:bold;
+    margin: 1em 0 0 0;
+}
+
+.display-field, 
+.editor-field 
+{
+    margin: 0.5em 0 0 0;
+}
+
+.text-box.multi-line {
+    height: 6.5em;
+}
+
+.tri-state {
+    width: 6em;
+}
+
+/* Miscellaneous
+----------------------------------------------------------*/
+
+.error {
+    color: Red;
+}
+
+#logindisplay {
+    margin:10px 0px 0px 0px;
+    right: 0px;
+    float:right;
+}
+
+#logindisplay a:link {
+    color: #444444;
+    text-decoration: underline;
+}
+
+#logindisplay a:visited {
+    color: #444444;
+    text-decoration: underline;
+}
+
+#logindisplay a:hover {
+    color: #444444;
+    text-decoration: none;
+}

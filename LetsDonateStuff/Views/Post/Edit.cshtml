@@ -1,0 +1,206 @@
+﻿@model LetsDonateStuff.Models.PostEditModel
+@{
+    ViewBag.Title = ViewBag.Heading = "Edit";
+}
+@section Head {
+    @ViewIncludes.AddMarkdownEditor(this)
+    @ViewIncludes.AddAddressPicker(this)
+}
+<div class="row">
+    @using (Html.BeginForm())
+    {
+        <div class="span6">
+            <div>
+                @Html.ValidationSummary(true)
+
+                <fieldset>
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.Type)
+
+                    @if (Model.Type == LetsDonateStuff.Models.ModelType.Donation)
+                    {
+                        <div class="display-field">
+                            @ViewHelpers.ShowImage(this, Model)
+                        </div>
+                    }
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Name)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.Name)
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </div>
+                    @if (User.IsAdmin())
+                    {
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Email)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.Email)
+                            @Html.ValidationMessageFor(model => model.Email)
+                        </div>
+                    }
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Title)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Title)
+                        @Html.ValidationMessageFor(model => model.Title)
+                    </div>
+                    @if (Model.Type == LetsDonateStuff.Models.ModelType.Donation)
+                    {                    
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Condition)
+                        </div>
+                        <div class="editor-field">
+                            @Html.EnumDropDownListFor(model => model.Condition)
+                            @Html.ValidationMessageFor(model => model.Condition)
+                        </div>
+                    }
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Description)
+                    </div>
+                    <div class="editor-field">
+                        @ViewHelpers.MarkDownEditor(this, "Description")
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PostedOn)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DisplayFor(model => model.PostedOn)
+                        @Html.HiddenFor(model => model.PostedOn)
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ExpiresOn)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.ExpiresOn)
+                        @Html.ValidationMessageFor(model => model.ExpiresOn)
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PublishOnOtherSites)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DisplayFor(model => model.PublishOnOtherSites)
+                        @Html.HiddenFor(model => model.PublishOnOtherSites)
+                    </div>
+                    @if (Model.Type == LetsDonateStuff.Models.ModelType.Donation)
+                    {
+
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.ImageUrlSmall)
+                        </div>
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.ImageUrlSmall)
+                            @Html.ValidationMessageFor(model => model.ImageUrlSmall)
+                        </div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.ImageUrlOriginal)
+                        </div>
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.ImageUrlOriginal)
+                            @Html.ValidationMessageFor(model => model.ImageUrlOriginal)
+                        </div>
+                    }
+                    <div class="editor-label">
+                        Status
+                    </div>
+                    <div class="editor-field">
+                        @Html.LabelFor(model => model.Approved)
+                        @Html.EditorFor(model => model.Approved)
+                        @Html.ValidationMessageFor(model => model.Approved)
+                    </div>
+                    <div class="editor-label">
+                        Actions
+                    </div>
+                    <div class="editor-field">
+                        @if (Model.Deleted)
+                        {
+                            if (User.IsAdmin())
+                            {
+                            @Html.ActionLink("Purge", "Purge", new { id = Model.Id }); @:|
+                            }
+                            @Html.ActionLink("Restore", "Restore", new { id = Model.Id });
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Delete", "Delete", new { id = Model.Id, mode = "ajax", height = 100, width = 300 }, new { @class = "thickbox" })
+                        }
+
+                        | @Html.ActionLink("Resend Confirmation", "ResendConfirmation", new { id = Model.Id, returnUrl = Request.Url })
+                    </div>
+                </fieldset>
+            </div>
+            <div class="display-field">
+                <input type="submit" value="Submit" class="btn btn-primary" data-dismiss="modal" />
+                @Html.ActionLink("Cancel", "Index", null, new { @class = "btn", id = "cancelButton" })
+            </div>
+        </div>
+        <div class="span6">
+            <div class="hidden-phone">
+                @Html.Partial("_EditMap")
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Latitude)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Latitude, new { @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.Latitude)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Longitude)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Longitude, new { @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.Longitude)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Locality)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Locality)
+                @Html.ValidationMessageFor(model => model.Locality)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Country)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Country)
+                @Html.ValidationMessageFor(model => model.Country)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.GeoIPCountry)
+            </div>
+            <div class="editor-field">
+                @Html.DisplayFor(model => model.GeoIPCountry)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Address)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Address)
+                @Html.ValidationMessageFor(model => model.Address)
+            </div>
+            @if (User.IsAdmin())
+            {
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.IP)
+                </div>
+                <div class="editor-field">
+                    @Html.DisplayFor(model => model.IP)
+                </div>
+            }
+        </div>  
+    }
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            $("#cancelButton").click(function () {
+                window.location.href = '@Url.Action("Details", "Post", new { id = Model.Id, slug = Model.Slug })';
+                return false;
+            });
+        });
+    </script>
+}

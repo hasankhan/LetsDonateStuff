@@ -1,0 +1,202 @@
+.checklist {
+	margin: 0 0 14px 0;
+}
+.checklist li {
+	color: #666;
+	font-size: 12px;
+	line-height: 18px;
+	background: url(Images/howitworks/li-check.png) 0 6px no-repeat;
+	padding: 0 0 0 19px;
+	line-height: 24px;
+}
+.who_players {
+	line-height: 32px;
+	font-size: 14px;
+	padding: 10px 0;
+}
+.who_players li {
+	color: #666;
+	vertical-align: top;
+}
+.who_players span {
+	width: 100px;
+	display: inline-block;
+	text-align: right;
+	color: #28b8e5;	
+}
+.how_who {
+	font-size: 20px;
+	margin: 8px 0;
+	padding: 0 4px 0 0;
+}
+
+.how_visual {
+	padding: 60px 0 0 0;
+}
+.how_row {
+	width: 1000px;
+	min-height: 250px;
+	display: inline-block;
+	vertical-align: top;
+	/* IE7 'hack' for getting them act as inline-block */
+	*zoom: 1;
+	*display: inline;
+}
+.how_row ul li {
+	background: url(Images/howitworks/li-item.png) 0 6px no-repeat;
+	padding: 0 0 0 13px;
+	line-height: 24px;
+}
+.how_row.how_less {
+	min-height: 100px;
+}
+#content .how_row h3.header {
+	color: #555;
+	font-size: 14px;
+	font-weight: normal;
+	margin: 10px 0 5px 0;
+}
+
+.how_bottom_row {
+	position: relative;
+	top: -35px;
+}
+.how_column {
+	width: 300px;
+	min-height: 250px;
+	display: inline-block;
+	vertical-align: top;
+	float: left;
+	/* IE7 'hack' for getting them act as inline-block */
+	*zoom: 1;
+	*display: inline;
+}
+.how_column .how_text p {
+	color: #666;
+}
+
+.how_visual_1 {
+	background: url(Images/howitworks/how-it-works-visual-1.png) 50% 0 no-repeat;
+	min-height: 300px;
+	width: 365px;
+}
+.how_visual_2 {
+	background: url(Images/howitworks/how-it-works-visual-2.png) 100% -18px no-repeat;
+	min-height: 300px;
+}
+.how_visual_3 {
+	background: url(Images/howitworks/how-it-works-visual-3.png) 0 5px no-repeat;
+	min-height: 300px;
+}
+.how_visual_4 {
+	background: url(Images/howitworks/how-it-works-visual-4.png) 50% 35px no-repeat;
+	min-height: 300px;
+	width: 345px;
+}
+.how_visual_5 {
+	width: 260px;
+	height: 180px;
+	background: url(Images/howitworks/how-it-works-visual-5.png) 0 10px no-repeat;
+}
+.how_text ol {
+	padding: 0 0 12px;
+	font-size: 12px;
+	color: #666;
+	line-height: 1.6em;
+	margin: 0;
+}
+.how_text ol li {
+	list-style: decimal;
+	list-style-position: inside;
+}
+
+.step_1 {
+	background: url(Images/howitworks/how-it-works-horizonal.png) 0 64px repeat-x;
+}
+.step_1 .how_title {
+	padding: 0 0 0 20px;
+}
+.step_1 .how_text {
+	width: 260px;
+	padding: 45px 0 0 20px;
+}
+.step_2 {
+	height: 300px;
+	background: url(Images/howitworks/how-it-works-step-2.png) -103px 77px no-repeat;
+}
+.step_2 .how_title {
+	padding: 10px 0 0 20px;
+}
+.step_2 .how_text {
+	width: 240px;
+	padding: 45px 0 0 20px;
+}
+.step_3 {
+	background: url(Images/howitworks/how-it-works-horizonal.png) 0 69px repeat-x;
+	width: 365px
+}
+.step_3 .how_title {
+	padding: 10px 0 0 30px;
+}
+.step_3 .how_text {
+	width: 260px;
+	padding: 45px 0 0 30px;
+}
+.step_4 {
+	background: url(Images/howitworks/how-it-works-step-4.png) 0 -130px repeat-x;
+}
+.step_4 .how_title {
+	padding: 30px 0 0 30px;
+}
+.step_4 .how_text {
+	width: 260px;
+	padding: 45px 0 0 30px;
+}
+.step_5 {
+	background: url(Images/howitworks/how-it-works-horizonal.png) 0 89px repeat-x;
+}
+.step_5 .how_title {
+	padding: 30px 0 0 20px;
+}
+.step_5 .how_text {
+	width: 260px;
+	padding: 45px 0 0 20px;
+}
+
+#content .how_title h3 {
+	color: #999;
+	font-size: 24px;
+	font-weight: normal;
+	vertical-align: bottom;
+	margin-top: 0; margin-bottom: 0;
+}
+#content .how_title h3 span {
+	color: #3a3a3a;
+	font-size: 42px;
+	letter-spacing: -2px;
+	margin: 0 0 0 -2px;
+}
+#content .how_title h4 {
+	color: #28b8e5;
+	font-size: 14px;
+	margin-top: 5px;
+}
+
+.pitch_country {
+	background: url(Images/howitworks/icon-place.png) 0 0 no-repeat;
+	padding: 0 0 0 18px;
+	height: 20px;
+	line-height: 20px;
+}
+
+#howitworks-legend { position: absolute; right: 0; top: 80px; width: 350px; padding: 10px 15px; background: #F5F5F5; border: 1px solid #CCC; min-height: 0; 
+	-moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; 
+}
+#howitworks-legend ul { margin-bottom: 0 !important; padding-bottom: 0 !important;  }
+#howitworks-legend ul b { font-weight: bold; }
+
+
+ol.steps_text li, ul.policy li, ul.points_to_note li
+{
+    margin-bottom:10px;
+}

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<LetsDonateStuff.DAL.Response>
+<div class="row">
+    <div class="span12">
+        <table class='table table-bordered table-striped'>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    SentOn
+                </th>
+                <th>
+                    IP
+                </th>
+            </tr>
+
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SentOn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IP)
+                </td>
+            </tr>
+        }
+
+        </table>
+        </div>
+     </div>
+</div>

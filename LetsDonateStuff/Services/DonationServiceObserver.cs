@@ -1,0 +1,69 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using LetsDonateStuff.DAL;
+using LetsDonateStuff.Helpers;
+using LetsDonateStuff.Mailers;
+using Mvc.Mailer;
+using LetsDonateStuff.Services.Publishing;
+
+namespace LetsDonateStuff.Services
+{
+    public class DonationServiceObserver
+    {
+        Imgur imgur;
+        UserMailer mailer;
+        IPublishingService publishingService;
+
+        public DonationService DonationService { get; private set; }
+
+        public DonationServiceObserver(Imgur imgur, DonationService donationService, UserMailer mailer, IPublishingService publishingService)
+        {
+            this.imgur = imgur;
+            this.DonationService = donationService;
+            this.mailer = mailer;
+            this.publishingService = publishingService;
+
+            donationService.PostAdded += donationService_PostAdded;
+            donationService.PostPurged += donationService_PostPurged;
+            donationService.ResendConfirmationEmail += donationService_ResendConfirmationEmail;
+            donationService.ResponseAdded += donationService_ResponseAdded;
+            donationService.PostApproved += donationService_PostApproved;
+        }        
+
+        void donationService_ResponseAdded(object sender, ResponseAddedEventArgs e)
+        {
+            ExceptionMonster.EatException(() => mailer.ContactPoster(e.Request, e.Post).SendAsync());
+        }
+
+        void donationService_ResendConfirmationEmail(object sender, ItemEventArgs e)
+        {
+            SendConfirmation(e.Item);
+        }
+
+        void donationService_PostPurged(object sender, ItemEventArgs e)
+        {
+            var donation = e.Item as Donation;
+            if (donation != null && donation.ImageDelHash != null)
+                ExceptionMonster.EatException(() => imgur.Delete(donation.ImageDelHash));
+        }
+
+        void donationService_PostAdded(object sender, ItemEventArgs e)
+        {
+            SendConfirmation(e.Item);
+            ExceptionMonster.EatException(() => mailer.Approval(e.Item).SendAsync());
+        }
+
+        void donationService_PostApproved(object sender, ItemEventArgs e)
+        {
+            if (e.Item.PublishPending)
+                e.Item.PublishedOnce = publishingService.Publish(e.Item);
+        }
+
+        void SendConfirmation(PostedItem item)
+        {
+            ExceptionMonster.EatException(() => mailer.Confirmation(item).SendAsync());
+        }
+    }
+}

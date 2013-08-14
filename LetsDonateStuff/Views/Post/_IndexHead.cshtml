@@ -1,0 +1,2 @@
+﻿@Html.Partial("_SiteMeta")
+<link rel="canonical" href="@Html.Raw(Url.Action("Index", "Post", new { c = ViewBag.Country, q = ViewBag.Query, p=ViewBag.Pages.PageNumber }))" />

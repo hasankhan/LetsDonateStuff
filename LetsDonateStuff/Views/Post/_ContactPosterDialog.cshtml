@@ -1,0 +1,58 @@
+﻿@model LetsDonateStuff.Models.ContactModel
+
+<!-- Contact Donor Modal Window content -->
+@using (Html.BeginForm("ContactPoster", "Post", FormMethod.Post))
+{
+<div id="contactPosterDialog" class="modal hide fade">
+ 
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal" >&times;</a>
+            <h3>Contact</h3>
+        </div>
+        <div class="modal-body">
+       
+        @Html.ValidationSummary(true)
+        <fieldset>
+            @Html.HiddenFor(model => model.ID)
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Name)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Name)<br />
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Email)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Email)<br />
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Message)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Message)<br />
+                @Html.ValidationMessageFor(model => model.Message)
+            </div>
+
+            @Html.Partial("_Captcha")
+
+        </fieldset>    
+        <br />
+        </div>
+        <div class="modal-footer display-field">
+            <input type="submit" value="Submit" class="btn btn-primary"/>
+            <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+        </div>
+</div>
+}
+
+<script type="text/javascript">
+    @if (ViewBag.ContactModel.Show) {
+        @:$('#contactPosterDialog').modal('show')    
+    }
+</script>

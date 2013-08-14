@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = ViewBag.Heading = "Page Not Found";
+}
+<div class="row">
+    <div class="span12">
+        The page you are trying to view does not exist.
+        <br />
+        <hr />
+        @Html.ActionLink("Back To Home", "Index", "Post", null, new { @class = "lds-button" })
+    </div>
+</div>

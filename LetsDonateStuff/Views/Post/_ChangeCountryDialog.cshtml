@@ -1,0 +1,33 @@
+﻿<!-- Country Choice modal content -->
+<div id="changeCountryDialog" class="modal hide fade">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>
+            Choose your country</h3>
+    </div>
+    <div class="modal-body">
+        @Html.DropDownList("country", LetsDonateStuff.Helpers.CountryList.GetSelectList())
+    </div>
+    <div class="modal-footer">
+        <a href="#" id='changeCountry' class="btn btn-primary">Update Country</a>
+        <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+    </div>
+</div>
+
+<script type='text/javascript'>
+    $(function () {
+        var currentCountry = '@ViewBag.Country';
+        var ddlCountry = $('#country');
+        var searchFrm = $('#searchForm');
+
+        $('#changeCountryDialog').on('show', function () {
+            ddlCountry.val(currentCountry);
+        });
+
+        $('#changeCountry').click(function () {
+            var newAction = '/' + ddlCountry.val();
+            searchFrm.attr('action', newAction);
+            searchFrm.submit();
+        });
+    });
+</script>

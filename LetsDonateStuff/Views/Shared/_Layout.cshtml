@@ -1,0 +1,148 @@
+﻿<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width">
+    <title>@ViewBag.Title | LetsDonateStuff.com - Save earth and help others</title>
+
+    <!-- fav and touch icons -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-57x57-precomposed.png">
+
+    <!-- open graph meta tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="@ViewBag.Title | LetsDonateStuff.com - Save earth and help others">
+    <meta property="og:site_name" content="LetsDonateStuff.com">
+    <meta property="og:image" content="@(ViewBag.TitleImage ?? Url.SiteUrl() + Url.Content("~/apple-touch-icon-114x114-precomposed.png"))"/>
+
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/themes/base/css")
+    @Scripts.Render("~/bundles/js")
+
+    @RenderSection("Head", required: false)
+</head>
+<body>
+    <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+    <!-- Header Starts Here -->
+    <div class="container">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="/">
+                        <img src="@Url.Content("~/Content/Images/logo.png")" alt="LetsDonateStuff.com"></a>
+                    <div>
+                        <!--NAV Starts here -->
+                        <nav>
+                            <ul id="main">
+                                <li @ViewHelpers.SelectIfControllerAndAction(this, "Post", "Index") id="home">@Html.ActionLink("Home", "Index", "Post")</li>
+                                <li @ViewHelpers.SelectIfControllerAndAction(this, "Post", "Offer") id="offer">@Html.RouteLink("Offer Stuff", "Offer")</li>
+                                <li @ViewHelpers.SelectIfControllerAndAction(this, "Post", "Need") id="need">@Html.RouteLink("Need Stuff", "Need")</li>
+                                <li @ViewHelpers.SelectIfControllerAndAction(this, "Home", "HowItWorks") id="howitworks">@Html.ActionLink("How It Works?", "HowItWorks", "Home")</li>
+                                <li @ViewHelpers.SelectIfControllerAndAction(this, "Home", "FAQ") id="faq">@Html.ActionLink("FAQ", "FAQ", "Home")</li>
+                                <li @ViewHelpers.SelectIfControllerAndAction(this, "Home", "SpreadTheLove") id="spreadlove">@Html.ActionLink("Spread The Love!", "SpreadTheLove", "Home")</li>
+                                <li @ViewHelpers.SelectIfControllerAndAction(this, "Home", "ReachUs") id="reachus">@Html.ActionLink("Reach Us", "ReachUs", "Home")</li>
+                            </ul>
+                        </nav>
+                        <!--NAV Ends here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Partial("_LogOnPartial")
+    </div>
+    @* Header ends here *@
+    @RenderSection("ContentHeader", false)
+    @* Content Starts Here *@
+    <div class="container" id="content">
+        @if (ViewBag.Heading != null)
+        {
+            <div class="row">
+                <div class="span12">
+                    <h1 class="page-header">@ViewBag.Heading</h1>
+                </div>
+            </div>
+        }
+        @RenderBody()
+    </div>
+    @* Contents End Here *@
+    <br>
+    @* Footer Starts Here *@
+    <footer id="footer">
+        <div class="container">
+            <div class="row-fluid quote-bg">
+                @Html.Partial("_RandomQuote")
+
+                @* End Footer Qoutes *@
+
+                @* Footer Navigation Starts Here *@
+                <div class="span3 border-left">
+                    <span class="title">Navigation</span>
+                    <nav id="footer-nav">
+                        <ul>
+                            <li>@Html.ActionLink("Home", "Index", "Post")</li>
+                            <li>@Html.RouteLink("Offer Stuff", "Offer")</li>
+                            <li>@Html.RouteLink("Need Stuff", "Need")</li>
+                            <li>@Html.ActionLink("How It Works?", "HowItWorks", "Home")</li>
+                            <li>@Html.ActionLink("FAQ", "FAQ", "Home")</li>
+                            <li>@Html.ActionLink("Spread The Love!", "SpreadTheLove", "Home")</li>
+                            <li>@Html.ActionLink("Reach Us", "ReachUs", "Home")</li>
+                        </ul>
+                    </nav>
+                </div>
+                @* end #footer-nav *@
+
+                @* Social Links Starts Here *@
+                <div class="span2 border-left">
+                    <span class="title">Our Social Presence</span>
+                    <ul class="social-links">
+                        <li class="twitter"><a href="http://twitter.com/letsdonatestuff" target="_blank">Twitter</a></li>
+                        <li class="facebook"><a href="http://facebook.com/LetsDonateStuff" target="_blank">Facebook</a></li>
+                        @*<li class="linkedin"><a href="#" target="_blank">LinkedIn</a></li>
+                        <li class="skype"><a href="callto:/" target="_blank">Skype</a></li>*@
+                    </ul>
+                </div>
+                @* end .social-links *@
+
+                @* Language Choice Starts Here *@
+                <div class="span2 border-left">
+                    <span class="title">Choose your language</span>
+                    <nav class="langauge-choice">
+                        <ul>
+                            <li><a href="#">English</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                @* end Language Choice *@
+            </div>
+        </div>
+    </footer>
+    <footer id="footer-bottom">
+        <div class="container">
+            <div class="row-fluid">
+                <div class="span12">
+                    <ul>
+                        <li>LetsDonateStuff &copy; 2012</li>
+                        <li><a href="javascript:UserVoice.showPopupWidget();" title="Open feedback & support dialog (powered by UserVoice)">Feedback & support</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    @* Footer Ends Here *@
+    @* Scripts Start Here *@
+    @RenderSection("Scripts", required: false)
+    @if (!User.IsAdmin())
+    {
+        @Html.Partial("_GoogleAnalytics")
+    }
+</body>
+</html>

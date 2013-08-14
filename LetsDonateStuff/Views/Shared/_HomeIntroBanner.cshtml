@@ -1,0 +1,44 @@
+﻿@* Slider starts here *@
+<div class="slidewrapper  hidden-phone">
+    <ul class="rslides">
+        <li>
+            <img src="@Url.Content("~/Content/Images/slides/slide-01.png")" alt="" /></li>
+        <li>
+            <img src="@Url.Content("~/Content/Images/slides/slide-02.png")" alt="" /></li>
+        <li>
+            <img src="@Url.Content("~/Content/Images/slides/slide-03.png")" alt="" /></li>
+        <li>
+            <img src="@Url.Content("~/Content/Images/slides/slide-04.png")" alt="" /></li>
+        <li>
+            <img src="@Url.Content("~/Content/Images/slides/slide-05.png")" alt="" /></li>
+        <li>
+            <img src="@Url.Content("~/Content/Images/slides/slide-06.png")" alt="" /></li>
+        <li>
+            <a href="@Url.Action("HowItWorks", "Home")" title="Click to see how this thing works">
+                <img src="@Url.Content("~/Content/Images/slides/slide-07.png")" alt="" />
+            </a>
+        </li>
+    </ul>
+</div>
+@* Slider Ends here *@
+@* Stats and find & donate buttons start here *@
+<div class="container homestats hidden-phone">
+    <div class="container">
+        <div class="row">
+            <div class="span4" style="margin-top: 21px;">
+                <a href="@Url.Action("Index", "Post", new { p = 1 })" class="freestuff-btn" style="float: left;">Free Stuff</a>
+            </div>
+            <div class="span4">
+                <span class="no-of-items">@ViewBag.TotalOffers</span><div class="items-available">
+                    <p>
+                        Offers
+                    </p>
+                </div>
+            </div>
+            <div class="span4" style="margin-top: 21px;">
+                <a href="@Url.RouteUrl("Offer")" class="donate-btn" style="float: right;">Offer Stuff</a>
+            </div>
+        </div>
+    </div>
+</div>
+@* Stats and find & donate buttons End here *@

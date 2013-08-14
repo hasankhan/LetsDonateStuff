@@ -1,0 +1,48 @@
+﻿@model IEnumerable<LetsDonateStuff.DAL.PostedItem>
+@using PagedList.Mvc
+@using PagedList
+
+@{
+    string title = "Posts in " + ViewBag.CountryName;
+    ViewBag.Title = title;
+    if (ViewBag.Pages.PageNumber > 1)
+    {
+        ViewBag.Title += " - Page " + ViewBag.Pages.PageNumber;
+    }
+}
+
+@section Head {
+    @Html.Partial("_IndexHead")
+}
+
+@section ContentHeader {
+    @Html.Partial("_HomeIntroBanner")
+}
+
+<div class="row">
+    <div class="span5">
+        <div class="hidden-phone">
+            <div id="current-country">
+                Showing:<h3><span class="selected-country">@title</span></h3>
+                <a data-toggle="modal" href="#changeCountryDialog" class="btn btn-small">Change</a>
+            </div>
+            <hr />
+            <div>
+                @Html.Partial("_DonationsMap", Model, ViewData)
+            </div>
+        </div>
+    </div>
+    <div class="span7">
+        <h1>
+            @title <span class="badge badge-inverse">@(((IPagedList)ViewBag.Pages).TotalItemCount)</span>
+        </h1>
+        @Html.Partial("_SearchForm", "")
+        @Html.Partial("_DonationsList", Model, ViewData)
+        <span class="rss"><a href="/Feed?c=@ViewBag.Country&amp;q=@ViewBag.Query">Get this feed</a></span>
+    </div>
+</div>
+@Html.Partial("_ChangeCountryDialog")
+
+@section Scripts {
+    <script src="~/Scripts/homescript.js" type="text/javascript"></script>
+}

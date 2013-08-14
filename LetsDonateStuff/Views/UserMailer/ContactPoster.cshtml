@@ -1,0 +1,14 @@
+﻿@model LetsDonateStuff.DAL.Response
+@{
+    Layout = null;
+    string detailLink = Url.SiteUrl() + Url.Action("Details", "Post", new { id = ViewBag.Item.Id, slug = ViewBag.Item.Slug });     
+}
+Dear @ViewBag.Item.Name<br />
+<br />
+@Model.Name has contacted you from <a href="@Url.SiteUrl()">LetsDonateStuff.com</a> for your post <a href="@detailLink">@ViewBag.Item.Title</a>.<br />
+By replying to this email, you will reveal your email to the person.<br />
+<br />
+The message sent is as under:<br />
+---------------------------------------------<br />
+@Html.Markdown(Model.Message)
+---------------------------------------------<br />

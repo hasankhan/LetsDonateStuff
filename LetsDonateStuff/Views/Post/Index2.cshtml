@@ -1,0 +1,35 @@
+﻿@model IEnumerable<LetsDonateStuff.DAL.PostedItem>
+@using PagedList.Mvc
+@using PagedList
+
+@{
+    string title = "Posts in " + ViewBag.CountryName;
+    ViewBag.Title = title;
+    if (ViewBag.Pages.PageNumber > 1)
+    {
+        ViewBag.Title += " - Page " + ViewBag.Pages.PageNumber;
+    }
+}
+
+@section Head {
+    @Html.Partial("_IndexHead")
+}
+
+<div class="row">
+    <div class="span12">
+        <h1 class="page-header">@title <a data-toggle="modal" href="#changeCountryDialog" class="btn btn-large hidden-phone">Change</a></h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span6">
+        <div class="hidden-phone">
+            @Html.Partial("_DonationsMap", Model, ViewData)
+        </div>
+    </div>
+    <div class="span6">
+        @Html.Partial("_SearchForm", "")
+        @Html.Partial("_DonationsList", Model, ViewData)
+    </div>
+</div>
+@Html.Partial("_ChangeCountryDialog")

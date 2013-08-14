@@ -1,0 +1,17 @@
+﻿<div id="map_canvas"></div>    
+<script type="text/javascript">
+    $(function () {
+        var addresspickerMap = $("#Address").addresspicker({
+            elements: {
+                map: "#map_canvas",
+                lat: "#Latitude",
+                lng: "#Longitude",
+                locality: '#Locality',
+                country: '#Country'
+            }
+        });
+        var gmarker = addresspickerMap.addresspicker("marker");
+        gmarker.setVisible(true);
+        addresspickerMap.addresspicker("updatePosition");
+    });
+</script>

@@ -1,0 +1,52 @@
+﻿@model LetsDonateStuff.DAL.PostedItem
+
+@{
+    if (ViewBag.Ajax) {
+        Layout = null;
+    }
+    else {
+        ViewBag.Title = ViewBag.Heading = "Delete";
+    }
+}
+
+@if (!ViewBag.Ajax)
+{
+    <text>
+    <div class="row">
+    <div class="span12">
+    </text>
+}
+@if (@Model == null)
+{
+    @:Sorry the item does not exist
+}
+else
+{
+    @:Are you sure you want to delete the item @Model.Title?
+    <br /><br />
+    using (Html.BeginForm("Delete2", "Post", FormMethod.Post, new { id = "delForm" }))
+    {
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.Code)
+
+        <input type='submit' value='Yes' class='btn btn-primary' />
+        @Html.ActionLink("No", "Index", null, new { @class = "btn", id = "deleteNo" })
+    }
+}
+@if (ViewBag.Ajax)
+{
+    <script type="text/javascript">
+        $(function () {
+            $("#deleteNo").click(function () {
+                tb_remove();
+                return false;
+            });
+        });
+</script>
+}
+else
+{
+        @:</div>
+        @:</div>
+}
+

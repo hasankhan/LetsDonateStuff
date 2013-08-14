@@ -1,0 +1,30 @@
+﻿@using System.Web.Mvc.Html
+@using LetsDonateStuff.Helpers
+
+@helper AddShareThis(System.Web.Mvc.WebViewPage page)
+{
+    <script type="text/javascript">var switchTo5x = true;</script>
+    <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+    <script type="text/javascript">stLight.options({ publisher: "ur-b06bdfe8-b1f2-a889-92b2-a270da47446f" });</script>
+}
+
+@helper AddMarkdownEditor(System.Web.Mvc.WebViewPage page)
+    {
+    <link rel="stylesheet" type="text/css" href="@page.Url.Content("~/Scripts/mdd_styles.css")" />
+    <script src="@page.Url.Content("~/Scripts/MarkdownDeepLib.min.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("textarea.mdd_editor").MarkdownDeep({
+                help_location: "@page.Url.Content("~/Scripts/mdd_help.htm")",
+                ExtraMode: false,
+                SafeMode: true
+            });
+        });
+    </script>
+}
+
+@helper AddAddressPicker(System.Web.Mvc.WebViewPage page)
+    {
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
+    <script src="@page.Url.Content("~/Scripts/jquery.ui.addresspicker.js")" type="text/javascript"></script>
+}

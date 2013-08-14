@@ -1,0 +1,12 @@
+﻿@model LetsDonateStuff.Models.MapModel 
+           
+@{
+    ViewBag.Latitude = Model.Latitude;
+    ViewBag.Longitude = Model.Longitude;
+    Layout = "~/Views/Post/_Map.cshtml";
+}
+
+@if (Model != null)
+{
+    @ViewHelpers.AddMarker(Model.Latitude, Model.Longitude, Model.Title, Model.Description, Model.Draggable);
+}

@@ -1,0 +1,92 @@
+﻿@model LetsDonateStuff.Models.PostDetailModel
+@{
+    var offerModel = Model as LetsDonateStuff.Models.OfferDetailModel;
+    string titlePrefix = "Need";
+    if (offerModel != null) {
+        ViewBag.TitleImage = ViewHelpers.ImageLink(this, Model);
+        titlePrefix = "Offer";
+    }
+    ViewBag.Title = @titlePrefix + " - " + Model.Title;
+    ViewBag.Heading = @titlePrefix + ": " + Model.Title;
+}
+
+@section Head {
+    <meta name="Title" content="@ViewBag.Title" scheme="" />
+    <meta name="Description" content="@Model.Description" scheme="" />
+    <link rel="canonical" href="@Html.Raw(Url.Action("Details", "Post", new { id = Model.Id, slug = Model.Slug }))" />
+    @ViewIncludes.AddShareThis(this)
+    @ViewIncludes.AddMarkdownEditor(this)
+}
+<div class="row">
+    <div class="span6">
+        @if (offerModel != null) {
+            <p>@ViewHelpers.ShowImage(this, Model)</p>
+        }
+        <h3>
+            Posted by:</h3>
+        <p>@Html.DisplayFor(model => model.Name)</p>
+        @if (offerModel != null) {
+        <h3>
+            Condition:</h3>
+        <p>@EnumDropDownList.GetEnumDescription(offerModel.Condition)</p>
+        }
+        <h3>
+            Description:</h3>
+        @Html.Markdown(Model.Description)
+        <h3>
+            Posted on:</h3>
+        <p>@Html.DisplayFor(model => model.PostedOn)</p>
+        @if (User.IsModerator())
+        {
+            <h3>
+                Expires on:</h3>
+            @Html.DisplayFor(model => model.ExpiresOn)
+        }
+        @if (User.IsModerator())
+        {
+            <div class="editor-label">
+                Actions
+            </div>
+            <div class="editor-field">
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+            </div>
+        }
+        <hr>
+        <div class="row-fluid">
+                <a href="@Url.Action("Index")" class="lds-button"><i class="icon-th-list icon-white">
+                </i>&nbsp;Back to Home</a>
+                <a data-toggle="modal" href="#contactPosterDialog" class="lds-button"><i class="icon-user icon-white">
+                </i>&nbsp;Contact @(offerModel == null? "Poster": "Offerer")</a>
+        </div>
+        <div class="hidden-phone">
+            <hr>
+            @Html.Partial("_SearchForm", Model.CountryCode)
+        </div>
+    </div>
+    <div class="span6">
+        <div class="hidden-phone">
+            @Html.Partial("_MapDisplay", new LetsDonateStuff.Models.MapModel(Model.Title, Model.Latitude, Model.Longitude, Model.Description, false))
+        </div>
+        <h3>
+            Address</h3>
+        <p>@Html.DisplayFor(model => model.Address)</p>
+        <h3>
+            Country:</h3>
+        <p>@Html.DisplayFor(model => model.Country)</p>
+        <span class="hidden-phone">
+            <hr />
+            @Html.Partial("_ShareThis")
+            <h2 class="pull-right">Offer something today! <a href="@Url.Action("Offer")" class="go-button">GO!</a></h2>
+        </span>
+    </div>
+</div>
+@if (User.IsAdmin())
+{
+    <div class="row hidden-phone">
+        <div class="span12">
+            <h1 class="page-header">Requests</h1>  
+        </div>
+    </div>
+    @Html.Partial("_DonationRequestList", Model.Responses)
+}
+@Html.Partial("_ContactPosterDialog", (object)ViewBag.ContactModel)

@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = ViewBag.Heading = "Post does not exist";
+}
+
+<div class="row">
+    <div class="span12">
+        The post you're trying to view, does not exist.<br />
+        <br />
+        It may have been removed.<br />
+        <br />
+
+        <hr />
+        @Html.ActionLink("Back to Home", "Index", null, new { @class = "lds-button" })
+    </div>
+</div>

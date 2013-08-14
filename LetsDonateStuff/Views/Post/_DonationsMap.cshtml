@@ -1,0 +1,38 @@
+﻿@{
+    Layout = "~/Views/Post/_Map.cshtml";
+}
+
+var items = [];
+@foreach (var item in Model)
+{
+    <text>
+    items.push({id: @item.Id,
+                latitude: @item.Latitude,
+                longitude: @item.Longitude,
+                title: '@HttpUtility.JavaScriptStringEncode(item.Title)',
+                description: '@HttpUtility.JavaScriptStringEncode(item.Description)'
+                });
+    </text>
+}
+
+var zoom = map.getZoom();
+var boundsChangedListener = google.maps.event.addListener(map, 'bounds_changed', function() {
+    if (map.getZoom() > zoom) 
+        map.setZoom(zoom);
+    google.maps.event.removeListener(boundsChangedListener);
+});
+
+var latlngbounds = new google.maps.LatLngBounds();
+
+for (var i in items) {
+    (function(item){
+        var marker = addMarker(item.latitude, item.longitude, item.title, item.description, false);
+        google.maps.event.addListener(marker, 'click', function(){
+            SelectRow(item.id)
+        });
+        latlngbounds.extend(marker.position);
+    }(items[i]));
+}
+
+if (items.length > 0)
+    map.fitBounds(latlngbounds);

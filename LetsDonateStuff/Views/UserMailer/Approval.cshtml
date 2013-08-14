@@ -1,0 +1,9 @@
+﻿@model LetsDonateStuff.DAL.PostedItem
+@{
+    string editLink = Url.SiteUrl() + Url.Action("Edit", "Post", new { id = Model.Id });     
+}
+Dear Admin<br />
+<br />
+@Model.Name has posted <a href="@editLink">@Model.Title</a>.<br />
+<br />
+Please approve.

@@ -1,0 +1,40 @@
+﻿<div id="map_canvas"></div>    
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript">
+    $(function () {
+        @if (ViewBag.Latitude != null && ViewBag.Longitude != null)
+        {
+            @:var center = new google.maps.LatLng(@ViewBag.Latitude, @ViewBag.Longitude);
+        }
+        else
+        {
+            @:var center = new google.maps.LatLng(59.3426606750, 18.0736160278);
+        }
+
+        var myOptions =
+        {
+            zoom: @(ViewBag.Zoom ?? 12),
+            center: center,                
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+        function addMarker(latitude, longitude, title, description, draggable)
+        {
+              var latLng = new google.maps.LatLng(latitude, longitude);
+              var title = title;
+              var description = description;
+
+              var marker = new google.maps.Marker({
+                  position: latLng,
+                  title: title,
+                  map: map,
+                  draggable: draggable
+              });
+
+              return marker;
+        }
+
+        @RenderBody()
+    });
+</script>

@@ -1,0 +1,7 @@
+﻿@model string 
+           
+@using (Html.BeginForm("Index", "Post", FormMethod.Get, new {id="searchForm", @class="form-searcht"}))
+{
+    @Html.TextBox("q", null, new {@class="input-medium search-query"} )
+    <button type="submit" class="btn">Search</button>
+}

@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = ViewBag.Heading = "Spread The Love";
+}
+
+<div class="row">
+    <div class="span7">
+        <p>Its a website where you can find things that you need (instead of buying new ones) or if you have something extra lying around the house that your friend, neighbor, family or anyone else can make good use of then you can post it.</p>
+        <p>This website is an effort to start a new culture in which we save the environment by not throwing away old stuff, prevent land fill, re-use things from others instead of buying new ones and share our stuff with people who need them.</p>
+        <p>@Html.Partial("_VideoAd")</p>
+        <p>You can participate in this noble cause by finding stuff at home and posting them and tell your friends and family about it. The more people get to know and benefit from this site, the more chances are that we'll be able to make it successful.</p>
+        <p>Do you have ideas? Do @Html.ActionLink("let us know", "ReachUs").</p>
+    </div>
+    <div class="span5">
+        <img alt="Spread the love" src="@Url.Content("~/Content/Images/spread-love.png")" class="hidden-phone hidden-tablet" />
+    </div>
+</div>

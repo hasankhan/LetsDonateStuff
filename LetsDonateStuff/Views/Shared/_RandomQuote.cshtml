@@ -1,0 +1,21 @@
+﻿@{
+    var quotes = new[]
+    {
+        new []{"Blessed are those who can give without remembering and take without forgetting.", "Elizabeth Bibesco"},
+        new []{"If a free society cannot help the many who are poor, it cannot save the few who are rich.", "John F. Kennedy"},
+        new []{"Success has nothing to do with what you gain in life or accomplish for yourself. Its what you do for others.", "Danny Thomas"},
+        new []{"How wonderful it is that nobody need wait a single moment before starting to improve the world.", "Anne Frank"},
+        new []{"In helping others, we shall help ourselves, for whatever good we give out completes the circle and comes back to us.", "Flora Edwards"},
+        new []{"Love is all we have, the only way that each can help the other.", "Euripides"},
+        new []{"We can't help everyone, but everyone can help someone.", "Dr. Loretta Scott"},
+        new []{"Successful people are always looking for opportunities to help others. Unsuccessful people are always asking, \"What's in it for me?\"", "Brian Tracy"}
+        
+    };
+    var random = new Random();
+    string[] quote = quotes[random.Next(quotes.Length)];
+}
+<div class="span4">
+   	<span class="title">Inspirational Qoute</span>
+        <blockquote class="">@quote[0]</blockquote>
+        <cite>- @quote[1]</cite>
+</div>
