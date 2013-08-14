@@ -1,0 +1,5 @@
+/LetsDonateStuff/App_Data/Donations.mdf
+/LetsDonateStuff/App_Data/Donations_log.ldf
+
+*.db
+packages
