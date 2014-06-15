@@ -1,5 +1,9 @@
-/LetsDonateStuff/App_Data/Donations.mdf
-/LetsDonateStuff/App_Data/Donations_log.ldf
-
-*.db
-packages
+/packages
+/LetsDonateStuff/App_Data/*.mdf
+/LetsDonateStuff/App_Data/*.ldf
+/LetsDonateStuff/bin
+/LetsDonateStuff/obj
+/*.suo
+/LetsDonateStuff/Properties/PublishProfiles/*.pubxml
+/LetsDonateStuff/Properties/PublishProfiles/*.user
+Thumbs.db

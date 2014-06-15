@@ -6,36 +6,37 @@ using System.Security.Principal;
 using LetsDonateStuff.DAL;
 using System.Web;
 using System.Web.Security;
+using LetsDonateStuff.Models;
 
 namespace LetsDonateStuff.Helpers
 {
     public class UserResolver
     {
-        IMembershipService membershipService;
+        ApplicationUserManager userManager;
         IPrincipal principal;
         HttpContextBase context;
 
-        public UserResolver(IMembershipService membershipService, IPrincipal principal, HttpContextBase context)
+        public UserResolver(ApplicationUserManager userManager, IPrincipal principal, HttpContextBase context)
         {
-            this.membershipService = membershipService;
+            this.userManager = userManager;
             this.principal = principal;
             this.context = context;
         }
 
-        public MembershipUser User
+        public ApplicationUser User
         {
             get
             {
-                MembershipUser user = null;
-                if (principal.Identity.IsAuthenticated && (user = (MembershipUser)this.context.Items["user"]) == null)
+                ApplicationUser user = null;
+                if (principal.Identity.IsAuthenticated && (user = (ApplicationUser)this.context.Items["user"]) == null)
                     this.context.Items["user"] = user = GetUser();
                 return user;
             }
         }
 
-        MembershipUser GetUser()
+        ApplicationUser GetUser()
         {
-            MembershipUser user = membershipService.GetUser(principal.Identity.Name);
+            ApplicationUser user = userManager.FindByNameAsync(principal.Identity.Name).Result;
             return user;
         }
     }

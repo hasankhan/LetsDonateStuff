@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using LetsDonateStuff.App_Start;
-using System.Threading.Tasks;
-using System.Threading;
-using LetsDonateStuff.Helpers.PubSubHubbub;
-using System.Web.Configuration;
 using System.Configuration;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web;
+using LetsDonateStuff;
 using LetsDonateStuff.Helpers;
+using LetsDonateStuff.Helpers.PubSubHubbub;
 
-[assembly: WebActivator.PostApplicationStartMethod(typeof(RealTimeFeedSetup), "Start")]
-[assembly: WebActivator.ApplicationShutdownMethod(typeof(RealTimeFeedSetup), "Shutdown")]
+[assembly: WebActivatorEx.PostApplicationStartMethod(typeof(RealTimeFeedSetup), "Start")]
+[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(RealTimeFeedSetup), "Shutdown")]
 
-namespace LetsDonateStuff.App_Start
+namespace LetsDonateStuff
 {
     public static class RealTimeFeedSetup
     {

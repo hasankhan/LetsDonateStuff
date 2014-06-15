@@ -1,29 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using LetsDonateStuff.DAL;
-using PagedList;
-using LetsDonateStuff.Models;
 using LetsDonateStuff.Helpers;
-using LetsDonateStuff.Mailers;
-using Mvc.Mailer;
-using System.Configuration;
-using System.IO;
-using Elmah;
-using MaxMind.GeoIP;
-using System.Net.Mail;
-using System.ServiceModel.Syndication;
-using System.Drawing;
+using LetsDonateStuff.Helpers.ActionResults;
+using LetsDonateStuff.Helpers.Attributes;
 using LetsDonateStuff.Helpers.GeoIP;
 using LetsDonateStuff.Helpers.PubSubHubbub;
+using LetsDonateStuff.Models;
 using LetsDonateStuff.Services;
-using LetsDonateStuff.Helpers.Attributes;
-using LetsDonateStuff.Helpers.ActionResults;
-using Microsoft.Practices.Unity;
-using LetsDonateStuff.Filters;
-using System.Web.Security;
+using PagedList;
 
 namespace LetsDonateStuff.Controllers
 {
@@ -47,15 +37,15 @@ namespace LetsDonateStuff.Controllers
                                  [Bind(Prefix = "c")] string country)
         {
             int pageIndex = Math.Max(pageNumber.GetValueOrDefault(1) - 1, 0);
-            
+
             PostSearchResult result = donationService.Value.Search(query, country, pageIndex, pageSize, PostType.Both);
 
             foreach (var post in result.Posts)
                 post.Title = post.Title.ToTitleCase();
-            
+
             var pages = new StaticPagedList<PostedItem>(result.Posts, pageIndex + 1, pageSize, result.Count);
 
-            ViewBag.Pages = pages;            
+            ViewBag.Pages = pages;
 
             SetCountry(country, !result.Posts.Any());
 
@@ -89,7 +79,7 @@ namespace LetsDonateStuff.Controllers
             return new DonationFeed(result.Posts, hubUrls, Url);
         }
 
-        [AuthorizeUser]
+        [Authorize(Roles="Admin,Moderator")]
         public ActionResult ResendConfirmation(int id, string returnUrl)
         {
             returnUrl = returnUrl ?? Url.Action("Index");
@@ -101,16 +91,16 @@ namespace LetsDonateStuff.Controllers
             return Redirect(returnUrl);
         }
 
-        [AuthorizeUser]
-        public ActionResult Offer(MembershipUser user)
+        [Authorize]
+        public ActionResult Offer(ApplicationUser user)
         {
             var donation = GetCreateModel<OfferCreateModel>(user);
             donation.Condition = DonationCondition.Used;
             return View(donation);
         }
 
-        [HttpPost/*, Captcha*/, AuthorizeUser, ValidateInput(false)]
-        public ActionResult Offer(OfferCreateModel createModel, MembershipUser user)
+        [HttpPost/*, Captcha*/, Authorize, ValidateInput(false)]
+        public ActionResult Offer(OfferCreateModel createModel, ApplicationUser user)
         {
             if (!ModelState.IsValid)
                 return View(createModel);
@@ -133,15 +123,15 @@ namespace LetsDonateStuff.Controllers
             return RedirectToAction("Thankyou");
         }
 
-        [AuthorizeUser]
-        public ActionResult Need(MembershipUser user)
+        [Authorize]
+        public ActionResult Need(ApplicationUser user)
         {
             var request = GetCreateModel<PostCreateModel>(user);
             return View(request);
         }
 
-        [HttpPost/*, Captcha*/, AuthorizeUser, ValidateInput(false)]
-        public ActionResult Need(PostCreateModel createModel, MembershipUser user)
+        [HttpPost/*, Captcha*/, Authorize, ValidateInput(false)]
+        public ActionResult Need(PostCreateModel createModel, ApplicationUser user)
         {
             if (!ModelState.IsValid)
                 return View(createModel);
@@ -151,9 +141,9 @@ namespace LetsDonateStuff.Controllers
 
             donationService.Value.Add(request);
             return RedirectToAction("Thankyou");
-        }        
+        }
 
-        [HttpPost, Captcha, ValidateInput(false)]
+        [HttpPost, /*Captcha,*/ ValidateInput(false)]
         public ActionResult ContactPoster(ContactModel model)
         {
             if (!ModelState.IsValid)
@@ -205,15 +195,15 @@ namespace LetsDonateStuff.Controllers
             return RedirectToAction("Index");
         }
 
-        [AuthorizeUser(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Purge(int id)
         {
             donationService.Value.Purge(id);
-            
+
             return RedirectToAction("Index");
         }
 
-        [AuthorizeUser]
+        [Authorize(Roles="Moderator")]
         public ActionResult Restore(int id)
         {
             donationService.Value.Restore(id);
@@ -221,7 +211,7 @@ namespace LetsDonateStuff.Controllers
             return RedirectToAction("Details", new { id = id });
         }
 
-        [AuthorizeUser]
+        [Authorize]
         public ActionResult Edit(int id)
         {
             PostedItem item = donationService.Value.Get(id);
@@ -229,12 +219,12 @@ namespace LetsDonateStuff.Controllers
                 return FileNotFound("Post does not exist.");
 
             PostEditModel editModel = PropertyCopyPolymorphic<PostEditModel, PostEditModel, PostedItem, DonationRequest, Donation>(item);
-            
+
             editModel.Type = item is Donation ? ModelType.Donation : ModelType.Request;
             editModel.GeoIPCountry = geoIPHelper.GetCountry(item.IP);
 
             return View(editModel);
-        }        
+        }
 
         [Authorize, HttpPost, ValidateInput(false)]
         public ActionResult Edit(PostEditModel editModel)
@@ -248,7 +238,7 @@ namespace LetsDonateStuff.Controllers
                 bool wasApproved = post.Approved;
 
                 post.Address = editModel.Address;
-                post.Approved = editModel.Approved;                
+                post.Approved = editModel.Approved;
                 post.Country = editModel.Country;
                 post.Description = editModel.Description;
                 post.ExpiresOn = editModel.ExpiresOn;
@@ -265,8 +255,8 @@ namespace LetsDonateStuff.Controllers
                     var donation = (Donation)post;
                     donation.Condition = editModel.Condition;
                     donation.ImageUrlOriginal = editModel.ImageUrlOriginal;
-                    donation.ImageUrlSmall = editModel.ImageUrlSmall;                                   
-                }                
+                    donation.ImageUrlSmall = editModel.ImageUrlSmall;
+                }
 
                 donationService.Value.Update(post);
                 if (!wasApproved && post.Approved)
@@ -277,7 +267,7 @@ namespace LetsDonateStuff.Controllers
 
         public ActionResult Details(int id)
         {
-            PostDetailModel detailModel = GetPostDetail(id);           
+            PostDetailModel detailModel = GetPostDetail(id);
             if (detailModel == null)
                 return RedirectToActionPermanent("ItemDoesNotExist");
 
@@ -290,12 +280,11 @@ namespace LetsDonateStuff.Controllers
             return new FileNotFoundResult() { Message = message };
         }
 
-        void CreateModelToPostedItem(PostCreateModel createModel, PostedItem item, MembershipUser user)
+        void CreateModelToPostedItem(PostCreateModel createModel, PostedItem item, ApplicationUser user)
         {
             item.Address = createModel.Address;
             item.Locality = createModel.Locality;
             item.Country = createModel.Country;
-            item.PublishOnOtherSites = createModel.PublishOnOtherSites;
             item.Approved = false;
             item.Title = createModel.Title;
             item.Description = createModel.Description;
@@ -353,7 +342,7 @@ namespace LetsDonateStuff.Controllers
             FeedSignal.Instance.Signal(globalFeedUrl);
         }
 
-        TCreateModel GetCreateModel<TCreateModel>(MembershipUser user) where TCreateModel : PostCreateModel, new()
+        TCreateModel GetCreateModel<TCreateModel>(ApplicationUser user) where TCreateModel : PostCreateModel, new()
         {
             var donation = new TCreateModel();
 
@@ -362,7 +351,6 @@ namespace LetsDonateStuff.Controllers
             PointF location = geoIPHelper.GetLocation(Request.UserHostAddress);
             donation.Latitude = location.X;
             donation.Longitude = location.Y;
-            donation.PublishOnOtherSites = true;
 
             return donation;
         }
@@ -372,7 +360,7 @@ namespace LetsDonateStuff.Controllers
             where TSourceDerived1 : class, TSourceBase
             where TSourceDervied2 : class, TSourceBase
             where TTargetBase : class, new()
-            where TTargetDerived: class, TTargetBase, new()
+            where TTargetDerived : class, TTargetBase, new()
         {
             TTargetBase result = null;
             if (item is TSourceDerived1)

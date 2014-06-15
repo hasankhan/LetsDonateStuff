@@ -118,9 +118,6 @@ namespace LetsDonateStuff.Services
             if (!existing.Approved && post.Approved)
                 PostApproved(this, new ItemEventArgs(post));
 
-            if (existing.PublishPending && post.PublishedOnce)
-                UpdateItem(repository => repository.UpdatePost(post));
-            
             return true;
         }
 

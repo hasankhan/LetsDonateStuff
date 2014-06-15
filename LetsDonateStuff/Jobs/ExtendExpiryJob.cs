@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,12 +6,13 @@ using LetsDonateStuff.Services;
 
 namespace LetsDonateStuff.Jobs
 {
-    public class ExtendExpiryJob:DelayedJob
+    public class ExtendExpiryJob : DelayedJob
     {
         DonationService donationService;
         TimeSpan renewBefore;
 
-        public ExtendExpiryJob(TimeSpan interval, TimeSpan renewBefore, DonationService donationService):base("ExtendExpiryJob", interval)
+        public ExtendExpiryJob(TimeSpan interval, TimeSpan renewBefore, DonationService donationService)
+            : base("ExtendExpiryJob", interval)
         {
             this.donationService = donationService;
             this.renewBefore = renewBefore;

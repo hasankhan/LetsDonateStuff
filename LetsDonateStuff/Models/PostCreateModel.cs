@@ -34,8 +34,5 @@ namespace LetsDonateStuff.Models
 
         [StringLength(2)]
         public string Country { get; set; }
-
-        [DisplayName("Also publish on other sites (e.g. Freecycle)")]
-        public bool PublishOnOtherSites { get; set; }
     }
 }

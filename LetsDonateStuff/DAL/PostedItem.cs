@@ -75,18 +75,6 @@ namespace LetsDonateStuff.DAL
             get { return Title.GenerateSlug(); }
         }
 
-        [NotMapped]
-        public bool PublishPending
-        {
-            get { return !PublishedOnce && PublishOnOtherSites; }
-        }
-
-        // Whether the item was ever approved
-        public bool PublishedOnce { get; set; }
-
-        // Whether user agreed to publish the item to 3rd party sites
-        public bool PublishOnOtherSites { get; set; }
-
         public ICollection<Response> Responses { get; set; }
     }
 }

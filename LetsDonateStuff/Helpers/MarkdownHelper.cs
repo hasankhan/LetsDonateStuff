@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using MarkdownDeep;
 
-namespace LetsDonateStuff.Helpers
+namespace DanTup.Web
 {
 	/// <summary>
 	/// Helper class for transforming Markdown.

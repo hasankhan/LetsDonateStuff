@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using LetsDonateStuff.DAL;
-using System.ServiceModel.Syndication;
 using System.Web.Mvc;
+using System.ServiceModel.Syndication;
 
 namespace LetsDonateStuff.Helpers.ActionResults
 {

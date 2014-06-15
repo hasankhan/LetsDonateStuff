@@ -77,13 +77,6 @@
                         @Html.EditorFor(model => model.ExpiresOn)
                         @Html.ValidationMessageFor(model => model.ExpiresOn)
                     </div>
-                    <div class="editor-label">
-                        @Html.LabelFor(model => model.PublishOnOtherSites)
-                    </div>
-                    <div class="editor-field">
-                        @Html.DisplayFor(model => model.PublishOnOtherSites)
-                        @Html.HiddenFor(model => model.PublishOnOtherSites)
-                    </div>
                     @if (Model.Type == LetsDonateStuff.Models.ModelType.Donation)
                     {
 

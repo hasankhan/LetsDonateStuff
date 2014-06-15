@@ -43,8 +43,8 @@ namespace LetsDonateStuff.Helpers.PubSubHubbub
 
         static void LogException(Exception exception)
         {
-            var log = Elmah.ErrorLog.GetDefault(null);
-            log.Log(new Elmah.Error(exception));
+            //var log = Elmah.ErrorLog.GetDefault(null);
+            //log.Log(new Elmah.Error(exception));
         }
     }
 }

@@ -19,22 +19,13 @@ namespace LetsDonateStuff.Helpers.GeoIP
 
         public string GetCountry(string ip)
         {
-            string result = String.Empty;
-            MaxMind.GeoIP.Country country = lookupService.getCountry(ip);
-            if (country != null && country.getCode() != "--")
-                result = country.getCode();
-            return result;
+            return String.Empty;
         }
 
         public PointF GetLocation(string ip)
         {
             var point = new PointF();
-            Location location = lookupService.getLocation(ip);
-            if (location != null)
-            {
-                point.X = (float)location.latitude;
-                point.Y = (float)location.longitude;
-            }
+            
             return point;
         }
     }

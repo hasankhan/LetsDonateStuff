@@ -66,14 +66,6 @@
                         @Html.ValidationMessageFor(model => model.Address)
                     </div>
 
-                    <div class="editor-label">
-                        <label for="PublishOnOtherSites">Also publish on other sites (e.g. <a href="http://www.freecycle.org/" target="_blank">Freecycle</a>)</label>
-                    </div>
-                    <div class="editor-field">
-                        @Html.EditorFor(model => model.PublishOnOtherSites)
-                        @Html.ValidationMessageFor(model => model.PublishOnOtherSites)
-                    </div>
-
                     @*@Html.Partial("_Captcha")*@
                     <br />
                 </fieldset>

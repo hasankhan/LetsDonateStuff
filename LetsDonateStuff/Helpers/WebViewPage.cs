@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using LetsDonateStuff.Models;
 
 namespace LetsDonateStuff.Helpers
 {
@@ -17,7 +18,7 @@ namespace LetsDonateStuff.Helpers
             userResolver = DependencyResolver.Current.GetService<UserResolver>();
 	    }
     
-        protected MembershipUser GetUser()
+        protected ApplicationUser GetUser()
         {
             return userResolver.User;
         }

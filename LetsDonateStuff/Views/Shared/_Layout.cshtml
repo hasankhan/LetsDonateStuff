@@ -57,7 +57,7 @@
                 </div>
             </div>
         </div>
-        @Html.Partial("_LogOnPartial")
+        @Html.Partial("_LoginPartial")
     </div>
     @* Header ends here *@
     @RenderSection("ContentHeader", false)
@@ -140,7 +140,7 @@
     @* Footer Ends Here *@
     @* Scripts Start Here *@
     @RenderSection("Scripts", required: false)
-    @if (!User.IsAdmin())
+    @if (!User.IsInRole("Admin"))
     {
         @Html.Partial("_GoogleAnalytics")
     }

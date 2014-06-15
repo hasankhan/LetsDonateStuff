@@ -73,8 +73,5 @@ namespace LetsDonateStuff.Models
 
         [DisplayName("Image Original"), StringLength(255)]
         public string ImageUrlOriginal { get; set; }
-
-        [DisplayName("Also publish on other sites (e.g. Freecycle)")]
-        public bool PublishOnOtherSites { get; set; }
     }
 }

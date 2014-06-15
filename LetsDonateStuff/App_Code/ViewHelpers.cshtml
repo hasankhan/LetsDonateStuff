@@ -14,24 +14,17 @@
 }
 
 @helper ShowImage(System.Web.Mvc.WebViewPage page, dynamic item)
-    {
-        <a 
-        @if (item.ImageUrlSmall != null)
-        {
-            @:href="@item.ImageUrlOriginal" target="_blank" class="thickbox"
-        }
-        else
-        {
-            @:href="javascript:void(0)"
-        }    
-        >        
-          <img alt="@item.Title" src="@ImageLink(page, item)" width="90" height="90" />    
-        </a>
-    }
+{
+    <a @if (item.ImageUrlSmall != null) { @: href="@item.ImageUrlOriginal" target="_blank" class="thickbox"
+               } else { @: href="javascript:void(0)"
+               }>
+        <img alt="@item.Title" src="@ImageLink(page, item)" width="90" height="90" />
+    </a>
+}
 }
 
 @helper MarkDownEditor(System.Web.Mvc.WebViewPage page, string name)
-    {
+{
     <div class="mdd_toolbar"></div>
     @page.Html.TextArea(name, new { @class = "mdd_editor" })
     <div class="mdd_resizer"></div>
@@ -40,7 +33,7 @@
 }
 
 @helper SelectIfControllerAndAction(System.Web.Mvc.WebViewPage page, string controllerName, string actionName)
-    {
+{
     string normalizedControllerName = controllerName.EndsWith("Controller") ? controllerName : String.Format("{0}Controller", controllerName);
 
     if (page.ViewContext != null &&

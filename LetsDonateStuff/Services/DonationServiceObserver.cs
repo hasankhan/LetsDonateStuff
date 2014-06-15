@@ -6,7 +6,6 @@ using LetsDonateStuff.DAL;
 using LetsDonateStuff.Helpers;
 using LetsDonateStuff.Mailers;
 using Mvc.Mailer;
-using LetsDonateStuff.Services.Publishing;
 
 namespace LetsDonateStuff.Services
 {
@@ -14,16 +13,14 @@ namespace LetsDonateStuff.Services
     {
         Imgur imgur;
         UserMailer mailer;
-        IPublishingService publishingService;
 
         public DonationService DonationService { get; private set; }
 
-        public DonationServiceObserver(Imgur imgur, DonationService donationService, UserMailer mailer, IPublishingService publishingService)
+        public DonationServiceObserver(Imgur imgur, DonationService donationService, UserMailer mailer)
         {
             this.imgur = imgur;
             this.DonationService = donationService;
             this.mailer = mailer;
-            this.publishingService = publishingService;
 
             donationService.PostAdded += donationService_PostAdded;
             donationService.PostPurged += donationService_PostPurged;
@@ -57,8 +54,7 @@ namespace LetsDonateStuff.Services
 
         void donationService_PostApproved(object sender, ItemEventArgs e)
         {
-            if (e.Item.PublishPending)
-                e.Item.PublishedOnce = publishingService.Publish(e.Item);
+            
         }
 
         void SendConfirmation(PostedItem item)

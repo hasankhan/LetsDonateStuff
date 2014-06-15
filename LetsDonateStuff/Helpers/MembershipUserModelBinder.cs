@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using LetsDonateStuff.Models;
 
 namespace LetsDonateStuff.Helpers
 {
@@ -11,7 +12,7 @@ namespace LetsDonateStuff.Helpers
     {
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
-            MembershipUser user = DependencyResolver.Current.GetService<UserResolver>().User;
+            ApplicationUser user = DependencyResolver.Current.GetService<UserResolver>().User;
             return user;
         }
     }

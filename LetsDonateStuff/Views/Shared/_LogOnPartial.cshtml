@@ -1,7 +1,0 @@
-﻿@if (User.IsModerator())
-{
-    <div id="logindisplay">
-        <text>Welcome <strong>@GetUser().Coalesce(u=>u.UserName)</strong>!
-    [ @Html.ActionLink("Log Off", "LogOff", "Account") ]</text>
-    </div>
-}

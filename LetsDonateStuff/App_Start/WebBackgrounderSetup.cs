@@ -1,22 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
-using LetsDonateStuff.App_Start;
-using WebBackgrounder;
-using Elmah;
-using System.Web.Configuration;
-using LetsDonateStuff.Jobs;
 using LetsDonateStuff.DAL;
-using LetsDonateStuff.Services;
-using System.Configuration;
-using System.Security.Principal;
 using LetsDonateStuff.Helpers.GeoIP;
+using LetsDonateStuff.Jobs;
+using LetsDonateStuff.Services;
+using WebBackgrounder;
 
-[assembly: WebActivator.PostApplicationStartMethod(typeof(WebBackgrounderSetup), "Start")]
-[assembly: WebActivator.ApplicationShutdownMethod(typeof(WebBackgrounderSetup), "Shutdown")]
-
-namespace LetsDonateStuff.App_Start
+namespace LetsDonateStuff
 {
     public static class WebBackgrounderSetup
     {
@@ -38,14 +31,14 @@ namespace LetsDonateStuff.App_Start
 
             var coordinator = new SingleServerJobCoordinator();
             var manager = new JobManager(jobs, coordinator);
-            manager.Fail(ex => Elmah.ErrorLog.GetDefault(null).Log((new Error(ex))));
+            //manager.Fail(ex => Elmah.ErrorLog.GetDefault(null).Log((new Error(ex))));
 
             return manager;
         }
 
         static IEnumerable<Job> GetJobs()
         {
-            var service = new DonationService(()=>new DonationRepository(), new GeoIPHelper(), UserToken.Admin);
+            var service = new DonationService(() => new DonationRepository(), new GeoIPHelper(), UserToken.Admin);
 
             //yield return GetExtendExpiryJob(service);
             yield return GetCleanupJob(service);

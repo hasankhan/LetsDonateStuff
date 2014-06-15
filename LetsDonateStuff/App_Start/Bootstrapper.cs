@@ -1,71 +1,47 @@
-using System.Web.Mvc;
-using Microsoft.Practices.Unity;
-using Unity.Mvc3;
-using LetsDonateStuff.Services;
-using DotNetOpenAuth.OpenId.RelyingParty;
-using LetsDonateStuff.Helpers;
+﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
-using LetsDonateStuff.DAL;
-using System;
+using System.Linq;
 using System.Security.Principal;
 using System.Web;
-using System.Web.Security;
-using LetsDonateStuff.Services.Publishing;
-using LetsDonateStuff.Services.Publishing.Targets;
-using System.Collections.Generic;
-using LetsDonateStuff.Services.Publishing.Targets.Freecycle;
+using System.Web.Mvc;
+using Autofac;
+using Autofac.Integration.Mvc;
+using LetsDonateStuff.DAL;
+using LetsDonateStuff.Helpers;
+using LetsDonateStuff.Helpers.GeoIP;
 using LetsDonateStuff.Mailers;
-using LetsDonateStuff.Controllers;
-using LetsDonateStuff.Configuration;
-using LetsDonateStuff.Configuration.Freecycle;
+using LetsDonateStuff.Services;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace LetsDonateStuff
 {
-    public static class Bootstrapper
+    public class Bootstrapper
     {
-        public static void Initialise()
+        public static void Initialize()
         {
-            var container = BuildUnityContainer();
+            IContainer container = null;
+            var builder = new ContainerBuilder();
 
-            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
-        }
+            builder.RegisterControllers(typeof(MvcApplication).Assembly);
 
-        static IUnityContainer BuildUnityContainer()
-        {
-            var container = new UnityContainer();
+            builder.Register<HttpContextBase>(_ => new HttpContextWrapper(HttpContext.Current));
+            builder.Register<IPrincipal>(_ => HttpContext.Current.User);
+            builder.Register<ApplicationUserManager>(_ => HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>());
+            builder.RegisterType<AppSettings>();
+            builder.RegisterType<DonationServiceObserver>();
+            builder.RegisterType<Imgur>()
+                   .WithParameter("apiKey", ConfigurationManager.AppSettings["imgurKey"]);
+            builder.RegisterType<GeoIPHelper>();
+            builder.RegisterType<UserMailer>();
+            builder.RegisterType<UserToken>();
+            builder.RegisterType<DonationRepository>();
+            builder.RegisterType<UserResolver>();
+            builder.RegisterType<DonationService>()
+                   .OnActivated(e => e.Context.Resolve<DonationServiceObserver>(new TypedParameter(typeof(DonationService), e.Instance)));
 
-            container.RegisterType<AppSettings>(new ContainerControlledLifetimeManager());
-            container.RegisterInstance(new OpenIdRelyingParty());
-            container.RegisterInstance(new Imgur(ConfigurationManager.AppSettings["imgurKey"]));
-            container.RegisterInstance<MembershipProvider>(Membership.Provider);
-            container.RegisterInstance<RoleProvider>(Roles.Provider);
-            container.RegisterType<HttpContextBase>(new InjectionFactory(_ => new HttpContextWrapper(HttpContext.Current)));
-            container.RegisterType<IPrincipal>(new InjectionFactory(_ => HttpContext.Current.User));
-            container.RegisterType<IEnumerable<IPublishingTarget>>(new InjectionFactory(_ => container.ResolveAll<IPublishingTarget>()));
-            container.RegisterType<IMembershipService, MembershipService>();
-            
-            RegisterFreecycle(container);
-
-            RegisterService(container);
-            
-            return container;
-        }
-
-        static void RegisterFreecycle(UnityContainer container)
-        {
-            FreecycleSettings settings = FreecycleSection.GetSettings();
-            container.RegisterType<FreecycleMailer>(new InjectionFactory(_ => new FreecycleMailer(settings.From)));
-            container.RegisterType<IPublishingTarget>("freecycle", new InjectionFactory(_ =>
-                container.Resolve<FreecycleTarget>(new ParameterOverride("groups", settings.Groups))));
-        }
-
-        static void RegisterService(UnityContainer container)
-        {
-            container.RegisterType<IAuthenticationService, AuthenticationService>(new ContainerControlledLifetimeManager());
-            //container.RegisterType<IMembershipService, MembershipService>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IPublishingService, PublishingService>();
-            container.RegisterType<Lazy<DonationService>>(new InjectionFactory(_ =>
-                new Lazy<DonationService>(() => container.Resolve<DonationServiceObserver>().DonationService)));
+            container = builder.Build();
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }
     }
 }

@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Mvc.Mailer;
-using System.Net.Mail;
 using LetsDonateStuff.DAL;
-using LetsDonateStuff.Models;
-using LetsDonateStuff.Configuration;
+using LetsDonateStuff.Helpers;
+using Mvc.Mailer;
 
 namespace LetsDonateStuff.Mailers
 {

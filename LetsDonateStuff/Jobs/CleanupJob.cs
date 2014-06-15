@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,12 +8,13 @@ using LetsDonateStuff.Services;
 
 namespace LetsDonateStuff.Jobs
 {
-    public class CleanupJob: DelayedJob
+    public class CleanupJob : DelayedJob
     {
         DonationService donationService;
         TimeSpan olderThan;
 
-        public CleanupJob(TimeSpan interval, TimeSpan olderThan, DonationService donationService): base("CleanupJob", interval)
+        public CleanupJob(TimeSpan interval, TimeSpan olderThan, DonationService donationService)
+            : base("CleanupJob", interval)
         {
             this.donationService = donationService;
             this.olderThan = olderThan;

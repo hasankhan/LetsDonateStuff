@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 
 namespace LetsDonateStuff.Helpers.GeoIP
@@ -27,7 +28,7 @@ namespace LetsDonateStuff.Helpers.GeoIP
 
             HttpCookie cookie = httpContext.Request.Cookies[cookieName];
             if (cookie == null)
-                country = geoIPHelper.GetCountry(httpContext.Request.UserHostAddress);
+                country = geoIPHelper.GetCountry(IPAddress.Parse(httpContext.Request.UserHostAddress).MapToIPv4().ToString());
             else if (!String.IsNullOrEmpty(cookie.Value) && CountryList.IsValidCode(cookie.Value))
                 country = cookie.Value;
             
