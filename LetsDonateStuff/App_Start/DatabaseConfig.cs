@@ -5,9 +5,8 @@ using System.Linq;
 using System.Web;
 using LetsDonateStuff;
 using LetsDonateStuff.DAL;
-using WebMatrix.WebData;
 
-[assembly: WebActivator.PostApplicationStartMethod(typeof(DatabaseConfig), "Start")]
+[assembly: WebActivatorEx.PostApplicationStartMethod(typeof(DatabaseConfig), "Start")]
 
 namespace LetsDonateStuff
 {
@@ -16,9 +15,6 @@ namespace LetsDonateStuff
         public static void Start()
         {
             Database.SetInitializer<DonationsContext>(new DonationsInitializer());
-            using (var context = new DonationsContext())
-                context.Database.Initialize(force: false);
-            WebSecurity.InitializeDatabaseConnection("DonationsContext", "Users", "Id", "Name", autoCreateTables: true);
         }
     }
 }

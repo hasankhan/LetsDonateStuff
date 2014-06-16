@@ -28,7 +28,7 @@ namespace LetsDonateStuff.Helpers.GeoIP
 
             HttpCookie cookie = httpContext.Request.Cookies[cookieName];
             if (cookie == null)
-                country = geoIPHelper.GetCountry(IPAddress.Parse(httpContext.Request.UserHostAddress).MapToIPv4().ToString());
+                country = geoIPHelper.GetCountry(httpContext.Request.UserHostAddress);
             else if (!String.IsNullOrEmpty(cookie.Value) && CountryList.IsValidCode(cookie.Value))
                 country = cookie.Value;
             
