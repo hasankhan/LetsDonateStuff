@@ -20,11 +20,12 @@ namespace LetsDonateStuff.Helpers.GeoIP
         public string GetCountry(string ip)
         {
             MaxMind.GeoIP.Country country = this.lookupService.getCountry(ip);
-            if (country == null || country.getCode() == "--")
+            string code = country.Coalesce(c => c.getCode());
+            if (code == null || code == "--")
             {
                 return String.Empty;
             }
-            return country.getName();
+            return code;
         }
 
         public PointF GetLocation(string ip)
