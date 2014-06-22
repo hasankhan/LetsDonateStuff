@@ -15,31 +15,37 @@
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <fieldset>
-                    <ol>
-                        <li>
-                            @Html.LabelFor(m => m.Email)
-                            @Html.TextBoxFor(m => m.Email)
-                            @Html.ValidationMessageFor(m => m.Email)
-                        </li>
-                        <li>
-                            @Html.LabelFor(m => m.Password)
-                            @Html.PasswordFor(m => m.Password)
-                            @Html.ValidationMessageFor(m => m.Password)
-                        </li>
-                        <li>
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
-                        </li>
-                    </ol>
-                    <input type="submit" value="Log in" />
+                    <div class="editor-label">
+                        @Html.LabelFor(m => m.Email)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(m => m.Email)
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(m => m.Password)
+                    </div>
+                    <div class="editor-field">
+                        @Html.PasswordFor(m => m.Password)
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(m => m.RememberMe)
+                    </div>
+                    <div class="editor-field">
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                    </div>
+                    <br />
                 </fieldset>
+                <input type="submit" value="Log in" />
                 <p>
+                    <br />
                     @Html.ActionLink("Register", "Register") if you don't have an account.
                 </p>
                 @* Enable this once you have account confirmation enabled for password reset functionality
-                <p>
-                    @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                </p>*@
+                    <p>
+                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                    </p>*@
             }
         </section>
     </div>
